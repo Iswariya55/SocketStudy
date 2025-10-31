@@ -55,11 +55,35 @@ Socket programming finds applications in various domains, including web developm
 
 ## Program:
 #server.py
+```
+import socket
+from datetime import datetime
+s=socket.socket()
+s.bind(('localhost',8000))
+s.listen(5)
+c,addr=s.accept()
+print("Client Address : ",addr)
+now = datetime.now()
+c.send(now.strftime("%d/%m/%Y %H:%M:%S").encode())
+ack=c.recv(1024).decode()
+if ack:
+    print(ack)
+    c.close()
+```
+
 #client.py
 
+```
+import socket
+s=socket.socket()
+s.connect(('localhost',8000))
+print(s.getsockname())
+print(s.recv(1024).decode())
+s.send("acknowledgement recived from the server".encode())
+```
 
 
-<img width="1310" height="690" alt="Screenshot 2025-09-14 163747" src="https://github.com/user-attachments/assets/18b62deb-1008-41fc-82a1-9ea7d7f05bff" />
+
 
 
 
